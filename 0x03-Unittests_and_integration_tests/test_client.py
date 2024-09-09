@@ -8,7 +8,7 @@ from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
-    """TestGithubOrgClient class"""
+    """Test class"""
 
     @parameterized.expand([
         ("google",),
@@ -16,7 +16,7 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json')
     def test_org(self, org_name, mock_get_json):
-        """Test org method"""
+        """Test method"""
         expected_result = {"org_name": org_name}
         mock_get_json.return_value = expected_result
         github_client = GithubOrgClient(org_name)
@@ -26,7 +26,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.get_json')
     def test_public_repos_url(self, mock_get_json):
-        """Test public_repos_url method"""
+        """Test repos_url method"""
         mock_payload = {"repos_url": "https://api.github.com/orgs/exampleorg/repos"}
         mock_get_json.return_value = mock_payload
         org_client = GithubOrgClient("exampleorg")
@@ -35,7 +35,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
     @patch('client.GithubOrgClient.get_json')
     def test_public_repos(self, mock_get_json):
-        """Test public_repos method"""
+        """Test method"""
         mock_get_json.return_value = [{"name": "repo1"}, {"name": "repo2"}, {"name": "repo3"}]
         with patch('client.GithubOrgClient._public_repos_url', PropertyMock(return_value="www.no.com")) as y:
             github_org_client = GithubOrgClient("www.no.com")
@@ -60,11 +60,11 @@ class TestGithubOrgClient(unittest.TestCase):
     TEST_PAYLOAD
 )
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """Integration test class"""
+    """test class"""
     
     @classmethod
     def setUpClass(cls):
-        """Set up class"""
+        """Set class"""
         org = TEST_PAYLOAD[0][0]
         repos = TEST_PAYLOAD[0][1]
         mock_organisation = Mock()
@@ -80,5 +80,5 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        """Tear down class"""
+        """Tear class"""
         cls.get_patcher.stop()
